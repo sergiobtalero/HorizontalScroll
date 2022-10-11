@@ -13,6 +13,12 @@
 		D420055328F5DDDB002B7FE8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D420055128F5DDDB002B7FE8 /* Main.storyboard */; };
 		D420055528F5DDDD002B7FE8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D420055428F5DDDD002B7FE8 /* Assets.xcassets */; };
 		D420055828F5DDDD002B7FE8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D420055628F5DDDD002B7FE8 /* LaunchScreen.storyboard */; };
+		D420056028F5DE8C002B7FE8 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D420055F28F5DE8C002B7FE8 /* CollectionViewCell.swift */; };
+		D45CB1E528F5E3840018ED6A /* MSCollectionViewPeekingBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45CB1E428F5E3840018ED6A /* MSCollectionViewPeekingBehavior.swift */; };
+		D45CB1E728F5E3AD0018ED6A /* PeekingCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45CB1E628F5E3AD0018ED6A /* PeekingCollectionViewLayout.swift */; };
+		D45CB1E928F5E3D20018ED6A /* Axis.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45CB1E828F5E3D20018ED6A /* Axis.swift */; };
+		D45CB1EB28F5E3EE0018ED6A /* MSCollectionViewPaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45CB1EA28F5E3EE0018ED6A /* MSCollectionViewPaging.swift */; };
+		D45CB1ED28F5E4050018ED6A /* Sign.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45CB1EC28F5E4050018ED6A /* Sign.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +30,12 @@
 		D420055428F5DDDD002B7FE8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D420055728F5DDDD002B7FE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D420055928F5DDDD002B7FE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D420055F28F5DE8C002B7FE8 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		D45CB1E428F5E3840018ED6A /* MSCollectionViewPeekingBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MSCollectionViewPeekingBehavior.swift; sourceTree = "<group>"; };
+		D45CB1E628F5E3AD0018ED6A /* PeekingCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeekingCollectionViewLayout.swift; sourceTree = "<group>"; };
+		D45CB1E828F5E3D20018ED6A /* Axis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Axis.swift; sourceTree = "<group>"; };
+		D45CB1EA28F5E3EE0018ED6A /* MSCollectionViewPaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MSCollectionViewPaging.swift; sourceTree = "<group>"; };
+		D45CB1EC28F5E4050018ED6A /* Sign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sign.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +71,12 @@
 				D420054B28F5DDDB002B7FE8 /* AppDelegate.swift */,
 				D420054D28F5DDDB002B7FE8 /* SceneDelegate.swift */,
 				D420054F28F5DDDB002B7FE8 /* ViewController.swift */,
+				D45CB1E428F5E3840018ED6A /* MSCollectionViewPeekingBehavior.swift */,
+				D45CB1EA28F5E3EE0018ED6A /* MSCollectionViewPaging.swift */,
+				D45CB1EC28F5E4050018ED6A /* Sign.swift */,
+				D45CB1E628F5E3AD0018ED6A /* PeekingCollectionViewLayout.swift */,
+				D45CB1E828F5E3D20018ED6A /* Axis.swift */,
+				D420055F28F5DE8C002B7FE8 /* CollectionViewCell.swift */,
 				D420055128F5DDDB002B7FE8 /* Main.storyboard */,
 				D420055428F5DDDD002B7FE8 /* Assets.xcassets */,
 				D420055628F5DDDD002B7FE8 /* LaunchScreen.storyboard */,
@@ -139,7 +157,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D420055028F5DDDB002B7FE8 /* ViewController.swift in Sources */,
+				D45CB1E528F5E3840018ED6A /* MSCollectionViewPeekingBehavior.swift in Sources */,
+				D45CB1ED28F5E4050018ED6A /* Sign.swift in Sources */,
+				D45CB1E928F5E3D20018ED6A /* Axis.swift in Sources */,
+				D45CB1E728F5E3AD0018ED6A /* PeekingCollectionViewLayout.swift in Sources */,
+				D45CB1EB28F5E3EE0018ED6A /* MSCollectionViewPaging.swift in Sources */,
 				D420054C28F5DDDB002B7FE8 /* AppDelegate.swift in Sources */,
+				D420056028F5DE8C002B7FE8 /* CollectionViewCell.swift in Sources */,
 				D420054E28F5DDDB002B7FE8 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

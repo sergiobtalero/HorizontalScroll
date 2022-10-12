@@ -8,21 +8,31 @@
 import UIKit
 
 final class ViewController: UIViewController {
-    private lazy var peekingBehavior: MSCollectionViewPeekingBehavior = {
-        let behavior = MSCollectionViewPeekingBehavior()
-        return behavior
+    private lazy var flowLayout: UICollectionViewFlowLayout = {
+        let horizontalInset = Constants.peekWidth
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = .zero
+        layout.sectionInset = UIEdgeInsets(top: .zero,
+                                           left: horizontalInset,
+                                           bottom: .zero,
+                                           right: horizontalInset)
+        layout.itemSize = CGSize(width: view.bounds.size.width - horizontalInset * 2,
+                                 height: Constants.collectionViewHeight)
+        return layout
     }()
     
     private lazy var collectionView: UICollectionView = {
-        
         let _collectionView = UICollectionView(frame: .zero,
-                                               collectionViewLayout: peekingBehavior.layout)
+                                               collectionViewLayout: flowLayout)
         _collectionView.delegate = self
         _collectionView.dataSource = self
         _collectionView.register(CollectionViewCell.self,
                                  forCellWithReuseIdentifier: "CollectionViewCell")
         return _collectionView
     }()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +44,7 @@ final class ViewController: UIViewController {
 private extension ViewController {
     private enum Constants {
         static let collectionViewHeight: CGFloat = 300
+        static let peekWidth: CGFloat = 65
     }
 }
 
@@ -72,8 +83,28 @@ extension ViewController: UICollectionViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView,
                                    withVelocity velocity: CGPoint,
                                    targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        peekingBehavior.scrollViewWillEndDragging(scrollView,
-                                                  withVelocity: velocity,
-                                                  targetContentOffset: targetContentOffset)
+        targetContentOffset.pointee = scrollView.contentOffset
+        let indexOfVisibleCell = getIndexOfMainVisibleCell()
+        let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+        flowLayout?.collectionView?.scrollToItem(at: IndexPath(row: indexOfVisibleCell, section: .zero),
+                                                 at: .centeredHorizontally,
+                                                 animated: true)
+    }
+}
+
+// MARK: - Private methods
+extension ViewController {
+    private func getIndexOfMainVisibleCell() -> Int {
+        guard
+            let collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout,
+            let contentOffset = collectionViewLayout.collectionView?.contentOffset else {
+            return .zero
+        }
+        
+        let itemWidth = collectionViewLayout.itemSize.width
+        let proportionalOffset = contentOffset.x / itemWidth
+        let index = Int(round(proportionalOffset))
+        let numberOfItems = collectionView.numberOfItems(inSection: .zero)
+        return max(.zero, min(numberOfItems - 1, index))
     }
 }

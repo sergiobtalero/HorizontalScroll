@@ -28,12 +28,15 @@ final class ViewController: UIViewController {
                                                collectionViewLayout: flowLayout)
         _collectionView.delegate = self
         _collectionView.dataSource = self
+        _collectionView.showsHorizontalScrollIndicator = false
         _collectionView.register(CollectionViewCell.self,
                                  forCellWithReuseIdentifier: "CollectionViewCell")
         return _collectionView
     }()
     
-
+    private var indexOfCellBeforeDragging: Int = .zero
+    
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Carousel"
@@ -80,15 +83,33 @@ extension ViewController: UICollectionViewDataSource {
 }
 
 extension ViewController: UICollectionViewDelegate {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        indexOfCellBeforeDragging = getIndexOfMainVisibleCell()
+    }
     func scrollViewWillEndDragging(_ scrollView: UIScrollView,
                                    withVelocity velocity: CGPoint,
                                    targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         targetContentOffset.pointee = scrollView.contentOffset
+        let swipeVelocityThreshold: CGFloat = 0.5
         let indexOfVisibleCell = getIndexOfMainVisibleCell()
-        let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
-        flowLayout?.collectionView?.scrollToItem(at: IndexPath(row: indexOfVisibleCell, section: .zero),
-                                                 at: .centeredHorizontally,
-                                                 animated: true)
+        let didMainVisibleCellNotChanged = indexOfVisibleCell == indexOfCellBeforeDragging
+        let isVelocityEnoughForNextCell = indexOfCellBeforeDragging + 1 < 4 && velocity.x > swipeVelocityThreshold
+        let isVelocityEnoughForPreviousCell = indexOfCellBeforeDragging - 1 > .zero && velocity.x < -swipeVelocityThreshold
+        let didUseSwipeToSkipCell = didMainVisibleCellNotChanged && (isVelocityEnoughForNextCell || isVelocityEnoughForPreviousCell)
+        if didUseSwipeToSkipCell,
+            let collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            let snapToIndex = indexOfCellBeforeDragging + (isVelocityEnoughForNextCell ? 1 : -1)
+            let toValue = collectionViewLayout.itemSize.width * CGFloat(snapToIndex)
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: velocity.x, options: .allowUserInteraction, animations: {
+                scrollView.contentOffset = CGPoint(x: toValue, y: 0)
+                scrollView.layoutIfNeeded()
+            }, completion: nil)
+        } else {
+            let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+            flowLayout?.collectionView?.scrollToItem(at: IndexPath(row: indexOfVisibleCell, section: .zero),
+                                                     at: .centeredHorizontally,
+                                                     animated: true)
+        }
     }
 }
 

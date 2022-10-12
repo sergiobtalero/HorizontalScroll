@@ -96,17 +96,15 @@ extension ViewController: UICollectionViewDelegate {
         let isVelocityEnoughForNextCell = indexOfCellBeforeDragging + 1 < 4 && velocity.x > swipeVelocityThreshold
         let isVelocityEnoughForPreviousCell = indexOfCellBeforeDragging - 1 > .zero && velocity.x < -swipeVelocityThreshold
         let didUseSwipeToSkipCell = didMainVisibleCellNotChanged && (isVelocityEnoughForNextCell || isVelocityEnoughForPreviousCell)
-        if didUseSwipeToSkipCell,
-            let collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+        if didUseSwipeToSkipCell {
             let snapToIndex = indexOfCellBeforeDragging + (isVelocityEnoughForNextCell ? 1 : -1)
-            let toValue = collectionViewLayout.itemSize.width * CGFloat(snapToIndex)
+            let toValue = flowLayout.itemSize.width * CGFloat(snapToIndex)
             UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: velocity.x, options: .allowUserInteraction, animations: {
                 scrollView.contentOffset = CGPoint(x: toValue, y: 0)
                 scrollView.layoutIfNeeded()
             }, completion: nil)
         } else {
-            let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
-            flowLayout?.collectionView?.scrollToItem(at: IndexPath(row: indexOfVisibleCell, section: .zero),
+            flowLayout.collectionView?.scrollToItem(at: IndexPath(row: indexOfVisibleCell, section: .zero),
                                                      at: .centeredHorizontally,
                                                      animated: true)
         }
@@ -117,12 +115,11 @@ extension ViewController: UICollectionViewDelegate {
 extension ViewController {
     private func getIndexOfMainVisibleCell() -> Int {
         guard
-            let collectionViewLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout,
-            let contentOffset = collectionViewLayout.collectionView?.contentOffset else {
+            let contentOffset = flowLayout.collectionView?.contentOffset else {
             return .zero
         }
         
-        let itemWidth = collectionViewLayout.itemSize.width
+        let itemWidth = flowLayout.itemSize.width
         let proportionalOffset = contentOffset.x / itemWidth
         let index = Int(round(proportionalOffset))
         let numberOfItems = collectionView.numberOfItems(inSection: .zero)
